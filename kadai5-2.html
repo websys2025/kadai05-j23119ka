@@ -1,21 +1,19 @@
 <html lang="ja">
 <head>
     <meta charset="utf-8">
-    <title>演習課題5-2：外部APIの呼び出しテスト</title>
+    <title>演習課題5-2：ネコの画像API</title>
 </head>
 <body>
-    <h1 id="msg">何かのAPI</h1>
-    <form name="apiform"><p>
-        何かのフォーム：<input type="text" name="form_data">
-        <button type="button" id="btn1" onclick="some_api(this.form)">実行</button>
-    </p></form>
-    
+    <h1 id="msg">ネコ画像APIテスト</h1>
+    <button type="button" onclick="some_api()">ネコ画像を表示</button>
     <div id="result"></div>
+
     <script>
-        async function some_api(myForm) {
-            // ここにコードを書く
-            document.getElementById("result").innerHTML += myForm.form_data.value+"<br />";
-            document.apiform.reset();
+        async function some_api() {
+            const res = await fetch("https://api.thecatapi.com/v1/images/search");
+            const data = await res.json();
+            const imgUrl = data[0].url;
+            document.getElementById("result").innerHTML = `<img src="${imgUrl}" alt="ネコ画像" style="max-width:400px;">`;
         }
     </script>
 </body>
